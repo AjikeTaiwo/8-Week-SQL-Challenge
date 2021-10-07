@@ -29,7 +29,7 @@ ANSWER:A spent $76 , B spent $74 and C spent $36
 ```SQL
 SELECT
   	customer_id,
-    COUNT (order_date) AS number_of_vists
+    COUNT (DISTINCT(order_date)) AS number_of_vists
 FROM 
 	dannys_diner.sales
 GROUP BY 
@@ -37,7 +37,7 @@ GROUP BY
 
 ```
 
-ANSWER: A - 6 , B -  6 and C - 3
+ANSWER: A - 4 , B -  6 and C - 3
 
 3. What was the first item from the menu purchased by each customer?
 
