@@ -1,6 +1,6 @@
 SQL QUERIES AND ANSWERS - WEEK 1, 8WeekSQlChallenge, Danny's Diner
-SOURCE: https://8weeksqlchallenge.com/case-study-1/
-
+SOURCE: https://8weeksqlchallenge.com/case-study-1/ 
+Kindly refer to the source for background details
 
 1. What is the total amount each customer spent at the restaurant?
 
