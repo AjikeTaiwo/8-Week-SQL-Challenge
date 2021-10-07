@@ -1,6 +1,11 @@
-SQL QUERIES AND ANSWERS - WEEK 1, 8WeekSQlChallenge, Danny's Diner
-SOURCE: https://8weeksqlchallenge.com/case-study-1/ 
-Kindly refer to the source for background details
+SQL QUERIES AND ANSWERS - WEEK 1, 8WeekSQlChallenge, Danny's Diner SOURCE: https://8weeksqlchallenge.com/case-study-1/. Kindly refer to the source for background details
+
+NOTE: The challenge stated the questions for this case study could be answered with a single statement so I strived to achieve this .
+
+Analyst: Ajike Taiwo 
+
+Tools: PostGreSQL v13 via DB fiddle and Sublime Text
+
 
 1. What is the total amount each customer spent at the restaurant?
 
@@ -201,20 +206,22 @@ ANSWER A - 860  , B -  940  and C - 360
 
 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 
+ASSUMPTIONS: I made the assumption that the first week referred
+
 ```SQL 
 SELECT 
 SUM(points_earned) AS total_points,
 customer_id
 
 FROM
-
 (SELECT
     sales.customer_id,
     sales.product_id,
     menu.price,
     sales.order_date,
-    menu.price * 20 AS points_earned,
+  CASE WHEN menu.product_name = 'sushi'OR sales.order_date >=members.join_date then menu.price * 20 ELSE menu.price * 10  END AS points_earned,
     members.join_date
+ 
 FROM 
 	dannys_diner.menu
 INNER JOIN 
@@ -222,13 +229,50 @@ INNER JOIN
 INNER JOIN    
 dannys_diner.members ON sales.customer_id = members.customer_id
 WHERE 
-	sales.order_date >=  members.join_date AND sales.order_date < '2021-01-31T00:00:00.000Z') AS jtable
+	sales.order_date < '2021-01-31T00:00:00.000Z') AS jtable
     
- GROUP BY
- customer_id;
+GROUP BY
+customer_id;
 
 ```
-ANSWER A - 1,020  , B -  440   
+ANSWER A - 1,370  , B -  940   
 
 
+BONUS QUESTIONS 
+Creating basic data tables that Danny and his team can use to quickly derive insights without needing to join the underlying tables using SQL.
+
+1. JOIN ALL THINGS: Recreating table that includes data from three table
+
+``` SQL
+
+  CREATE TABLE insights
+AS (SELECT
+    sales.customer_id,
+    sales.order_date,
+    menu.product_name,
+    menu.price,
+    CASE 
+    WHEN sales.order_date >= members.join_date then 'Y' ELSE 'N' END AS member
+FROM 
+	dannys_diner.sales
+    
+LEFT JOIN
+    
+    dannys_diner.menu ON sales.product_id = menu.product_id
+LEFT JOIN
+	  dannys_diner.members ON sales.customer_id = members.customer_id)
+
+```
+
+2. RANK ALL THINGS: recreating table
+``` SQL
+
+ SELECT 
+    *, CASE WHEN member = 'N' then NULL else
+                   RANK() OVER (PARTITION BY customer_id, member ORDER BY order_date) END AS ranking
+                   
+    from
+    dannys_diner.insights;
+
+```
 
