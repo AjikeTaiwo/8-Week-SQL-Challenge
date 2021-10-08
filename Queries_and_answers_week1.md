@@ -1,11 +1,14 @@
-SQL QUERIES AND ANSWERS - WEEK 1, 8WeekSQlChallenge, Danny's Diner SOURCE: https://8weeksqlchallenge.com/case-study-1/. Kindly refer to the source for background details
+WEEK 1, 8WeekSQlChallenge, Danny's Diner 
 
-NOTE: The challenge stated the questions for this case study could be answered with a single statement so I strived to achieve this .
+Source: https://8weeksqlchallenge.com/case-study-1/. Kindly refer to the source for background details
+
+Note: The challenge stated the questions for this case study could be answered with a single statement so I strived to achieve this .
 
 Analyst: Ajike Taiwo 
 
 Tools: PostGreSQL v13 via DB fiddle and Sublime Text
 
+SQL QUERIES AND ANSWERS 
 
 1. What is the total amount each customer spent at the restaurant?
 
